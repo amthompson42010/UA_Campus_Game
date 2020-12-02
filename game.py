@@ -8,6 +8,8 @@
 #
 ##############################################################
 
+import math
+import random
 
 ######################################################################################
 #
@@ -17,41 +19,67 @@
 #
 #######################################################################################
 
+# Stores
+def lakesideDining(current_character):
+    updated_character = store(current_character, 3, 2, 3, 1, 1, 1)
+    return updated_character
+
+def mcLureLibrary(current_character):
+    updated_character = store(current_character, 3, 2, 3, 1, 1, 1)
+    return updated_character
+
+def basketballLevel(current_character):
+    updated_character = store(current_character, 3, 2, 3, 1, 1, 1)
+    return updated_character
+
+# Starting Levels
 def riverSideLiving():
-    return 0
+    enemy = tutorialEnemy()
+    print(enemy)
 def lakeSideLiving():
-    return 0
+    enemy = tutorialEnemy()
+    print(enemy)
 def ridgeCrestLiving():
-    return 0
-def gorgasLibrary():
-    return 0
-def quadLevel():
-    return 0
-def fergLevel():
-    return 0
-def lakesideDining():
-    return 0
-def engrLevel():
-    return 0
-def recLevel():
-    return 0
+    enemy = tutorialEnemy()
+    print(enemy)
 def presidentialLiving():
-    return 0
+    enemy = tutorialEnemy()
+    print(enemy)
+
+# Intermediate Levels
+def gorgasLibrary():
+    enemy = getEnemyStats()
+    print(enemy)
+def quadLevel():
+    enemy = getEnemyStats()
+    print(enemy)
+def fergLevel():
+    enemy = getEnemyStats()
+    print(enemy)
+def engrLevel():
+    enemy = getEnemyStats()
+    print(enemy)
+def recLevel():
+    enemy = getEnemyStats()
+    print(enemy)
 def engrLibrary():
-    return 0
-def mcLureLibrary():
-    return 0
+    enemy = getEnemyStats()
+    print(enemy)
 def brunoLibrary():
-    return 0
-def stadiumLevel():
-    return 0
+    enemy = getEnemyStats()
+    print(enemy)
 def adminLevel():
-    print("hello")
+    enemy = getEnemyStats()
+    print(enemy)
 def musicLevel():
-    return 0
-def basketballLevel():
-    return 0
+    enemy = getEnemyStats()
+    print(enemy)
 def baseballLevel():
+    enemy = getEnemyStats()
+    print(enemy)
+
+# End Level
+def stadiumLevel():
     return 0
 
 ###########################
@@ -63,11 +91,11 @@ def baseballLevel():
 def updateCharacterStats(current_character, health, strength, special, health_potions, strength_potions):
     
     # So this does not get messy
-    curr_health = current_character.get["vitality"]
-    curr_strength = current_character.get["strength"]
-    curr_special = current_character.get["special"]
-    curr_health_potions = current_character.get["health_potions"]
-    curr_strength_potions = current_character.get["strength_potions"]
+    curr_health = current_character.get("vitality")
+    curr_strength = current_character.get("strength")
+    curr_special = current_character.get("special")
+    curr_health_potions = current_character.get("health_potions")
+    curr_strength_potions = current_character.get("strength_potions")
 
     if(health > 0):
         curr_health += health
@@ -102,7 +130,7 @@ def storeHealthPotions(character_stats, h_stock):
         print("The number of requested potions is not available.")
         storeHealthPotions(character_stats, h_stock)
     
-    return updated_character
+    return updated_character, h_potions_amt
 
 def storeStrengthPotions(character_stats, s_stock):
     s_potions_amt = int(input("How many strength potions would you like?"))
@@ -114,12 +142,14 @@ def storeStrengthPotions(character_stats, s_stock):
     
     return updated_character
 
-def store(character_stats):
+def store(character_stats, h_stocks, potion_limits, s_stocks, s_timess, upgrade_limits, ss_timess):
     print("Welcome to the store!\n")
-    h_stock = 3
-    s_stock = 3
-    s_times = 1
-    ss_times = 1
+    h_stock = h_stocks
+    s_stock = s_stocks
+    s_times = s_timess
+    ss_times = ss_timess
+    potion_limit = potion_limits
+    upgrade_limit = upgrade_limits
 
     if(s_times == 1 and ss_times == 0):
         store_option = int(input("Would you like to see what I have for sell?\nUpgrades can only be done once per store.\n(1) Health Potion (Stock: {})\n(2) Strength Potion (Stock: {}) \n(3) Upgrade Strength (+2 to strength value)\nThis option is no longer available at this store. \n(5) Exit".format(h_stock, s_stock)))
@@ -132,21 +162,42 @@ def store(character_stats):
 
     if(store_option in store_options):
         if(store_option == 1):
-            updated_character = storeHealthPotions(character_stats, h_stock)
-            h_stock -= 1
-            store(updated_character)
+            if(potion_limit > 0):
+                updated_character, h_amount = storeHealthPotions(character_stats, h_stock)
+                h_stock -= h_amount
+                potion_limit -= 1
+            else:
+                print("Sorry! You have reached the limit for potions at this store.")
+                updated_character = character_stats
+            store(updated_character, h_stock, 2, 3, 1, 1, 1)
         elif(store_option == 2):
-            updated_character = storeStrengthPotions(character_stats, s_stock)
-            s_stock -= 1
-            store(updated_character)
+            if(potion_limit > 0):
+                updated_character = storeStrengthPotions(character_stats, s_stock)
+                s_stock -= 1
+                potion_limit -= 1
+            else:
+                print("Sorry! You have reached the limit for potions at this store.")
+                updated_character = character_stats
+            store(updated_character, 3, potion_limit, s_stock, 1,1,1)
+            
         elif(store_option == 3):
-            updateCharacterStats(character_stats, 0, 2, 0, 0, 0)
-            s_times -= 1
-            store(updated_character)
+            if(upgrade_limit > 0):
+                updateCharacterStats(character_stats, 0, 2, 0, 0, 0)
+                s_times -= 1
+                upgrade_limit -= 1
+            else:
+                print("Sorry! You have reached the limit for upgrades at this store.")
+                updated_character = character_stats
+            store(updated_character, 3, 2, 3, s_times, upgrade_limit, 1)
         elif(store_option == 4):
-            updateCharacterStats(character_stats, 0, 0, 2, 0, 0)
-            ss_times -= 1
-            store(updated_character)
+            if(upgrade_limit > 0):
+                updateCharacterStats(character_stats, 0, 0, 2, 0, 0)
+                ss_times -= 1
+                upgrade_limit -= 1
+            else:
+                print("Sorry! You have reached the limit for upgrades at this store.")
+                updated_character = character_stats
+            store(updated_character, 3, 2, 3, 1, upgrade_limit, ss_times)
         elif(store_option == 5):
             updated_character = character_stats
     else:
@@ -155,6 +206,18 @@ def store(character_stats):
 
     return updated_character
 
+def getEnemyStats():
+    boss_level = random.randInt(0, 10)
+    if(boss_level >= 8):
+        enemy = bossEnemy()
+    elif(boss_level >= 6 and boss_level < 7):
+        enemy = generalHardEnemy()
+    elif(boss_level >= 4 and boss_level < 5):
+        enemy = generalMediumEnemy()
+    elif(boss_level < 4 and boss_level >= 0):
+        enemy = generalMediumEnemy()
+
+    return enemy
 
 ######################################
 #
@@ -211,6 +274,14 @@ def defaultStartingCharacter():
         "strength_potions": 10
     }
     return default_character
+
+def tutorialEnemy():
+    tutorial_enemy = {
+        "vitality": 10,
+        "strength": 10,
+        "special": 10,
+    }
+    return tutorial_enemy
 
 def generalEasyEnemy():
     easy_enemy = {
@@ -277,7 +348,6 @@ def printMap():
     print("|  dorms   |           | dorms        |") 
     print("|----------|           |--------------|")
 
-
 def pauseMenu():
     print("(1) Continue")
     print("(2) Map")
@@ -291,9 +361,11 @@ def pauseMenu():
         print("Please enter a number 1-3 as your response.")
         pauseMenu()
 
-def getLevel(level):
+def getLevel(level, current_character):
     if(level == "riverside"):
         riverSideLiving()
+    elif(level == "default"):
+        lakeSideLiving()
     elif(level == "lakeside"):
         lakeSideLiving()
     elif(level == "ridgecrest"):
@@ -305,7 +377,8 @@ def getLevel(level):
     elif(level == "ferg"):
         fergLevel()
     elif(level == "lakesideDining"):
-        lakesideDining()
+        a = lakesideDining(current_character)
+        return a
     elif(level == "engr"):
         engrLevel()
     elif(level == "rec"):
@@ -377,7 +450,6 @@ def canMove(direction, curr_location):
             canMove = True
     return canMove
 
-
 def move(curr_location):
     direction = input("Which cardinal direction would you like to go? Options are north, south, east or west.")
     cordinal_direction = ["north", "south", "west", "east"]
@@ -390,10 +462,12 @@ def move(curr_location):
 def play(character_name, character_stats, starting_location):
 
     starting_character = checkContinue(starting_location, character_stats)
-    direction = move(starting_location)
+    level = getLevel(starting_location, character_stats)
+    level2 = getLevel("lakesideDining", character_stats)
+    #direction = move(starting_location)
 
-    isMove = canMove(direction, curr_location)
-    if(isMove == True)
+    #isMove = canMove(direction, curr_location)
+    #if(isMove == True)
     
     isPaused = getPausedState()
     
@@ -416,15 +490,16 @@ def getPlayerName():
 
 def getStartingLocation():
     starting_location = input("\nWhich dorm will you start at? Or would you like the default option?\n(example answers: ridgecrest, lakeside, riverside, presidential, default)\n")
-    starting_locations = ["lakeside", "ridgecrest", "riverside", "presidential"]
+    starting_locations = ["lakeside", "ridgecrest", "riverside", "presidential", "default"]
     if(starting_location in starting_locations):
         return starting_location
     else:
+        print("should not go here")
         getStartingLocation()
 
-def getStartingLocation():
-    starting_location = getStartingLocation()
-    return starting_location
+# def getStartingLocation():
+#     starting_location = getStartingLocation()
+#     return starting_location
 
 def getStartingCharacter(starting_location):
     
