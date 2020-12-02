@@ -60,6 +60,102 @@ def baseballLevel():
 #
 ###########################
 
+def updateCharacterStats(current_character, health, strength, special, health_potions, strength_potions):
+    
+    # So this does not get messy
+    curr_health = current_character.get["vitality"]
+    curr_strength = current_character.get["strength"]
+    curr_special = current_character.get["special"]
+    curr_health_potions = current_character.get["health_potions"]
+    curr_strength_potions = current_character.get["strength_potions"]
+
+    if(health > 0):
+        curr_health += health
+
+    if(strength > 0):
+        curr_strength += strength
+
+    if(special > 0):
+        curr_special += special
+    
+    if(health_potions > 0):
+        curr_health_potions += health_potions
+
+    if(strength_potions > 0):
+        curr_strength_potions += strength_potions
+
+    updated_character = {
+        "vitality": curr_health,
+        "strength": curr_strength,
+        "special": curr_special,
+        "health_potions": curr_health_potions,
+        "strength_potions": curr_strength_potions
+    }
+
+    return updated_character
+
+def storeHealthPotions(character_stats, h_stock):
+    h_potions_amt = int(input("How many health potions would you like?"))
+    if(h_potions_amt > 0 and h_potions_amt <= h_stock):
+        updated_character = updateCharacterStats(character_stats, 0, 0, 0, h_potions_amt, 0)
+    else:
+        print("The number of requested potions is not available.")
+        storeHealthPotions(character_stats, h_stock)
+    
+    return updated_character
+
+def storeStrengthPotions(character_stats, s_stock):
+    s_potions_amt = int(input("How many strength potions would you like?"))
+    if(s_potions_amt > 0 and s_potions_amt <= s_stock):
+        updated_character = updateCharacterStats(character_stats, 0, 0, 0, 0, s_potions_amt)
+    else:
+        print("The number of requested potions is not available.")
+        storeStrengthPotions(character_stats, s_stock)
+    
+    return updated_character
+
+def store(character_stats):
+    print("Welcome to the store!\n")
+    h_stock = 3
+    s_stock = 3
+    s_times = 1
+    ss_times = 1
+
+    if(s_times == 1 and ss_times == 0):
+        store_option = int(input("Would you like to see what I have for sell?\nUpgrades can only be done once per store.\n(1) Health Potion (Stock: {})\n(2) Strength Potion (Stock: {}) \n(3) Upgrade Strength (+2 to strength value)\nThis option is no longer available at this store. \n(5) Exit".format(h_stock, s_stock)))
+    elif(ss_times == 1 and s_times == 0):
+        store_option = int(input("Would you like to see what I have for sell?\nUpgrades can only be done once per store.\n(1) Health Potion (Stock: {})\n(2) Strength Potion (Stock: {}) \nThis option is no longer available at this store. \n(4) Upgrade Special (+2 to special value)\n(5) Exit".format(h_stock, s_stock)))
+    elif(s_times == 1 and ss_times == 1):
+        store_option = int(input("Would you like to see what I have for sell?\nUpgrades can only be done once per store.\n(1) Health Potion (Stock: {})\n(2) Strength Potion (Stock: {}) \n(3) Upgrade Strength (+2 to strength value)\n(4) Upgrade Special (+2 to special value)\n(5) Exit".format(h_stock, s_stock)))
+
+    store_options = [1,2,3,4,5]
+
+    if(store_option in store_options):
+        if(store_option == 1):
+            updated_character = storeHealthPotions(character_stats, h_stock)
+            h_stock -= 1
+            store(updated_character)
+        elif(store_option == 2):
+            updated_character = storeStrengthPotions(character_stats, s_stock)
+            s_stock -= 1
+            store(updated_character)
+        elif(store_option == 3):
+            updateCharacterStats(character_stats, 0, 2, 0, 0, 0)
+            s_times -= 1
+            store(updated_character)
+        elif(store_option == 4):
+            updateCharacterStats(character_stats, 0, 0, 2, 0, 0)
+            ss_times -= 1
+            store(updated_character)
+        elif(store_option == 5):
+            updated_character = character_stats
+    else:
+        print("You have entered an answer that can not be understood. Please enter\na numerical value, 1 through 5.")
+        store(character_stats)
+
+    return updated_character
+
+
 ######################################
 #
 # Start of Character Stat Functions
@@ -117,19 +213,44 @@ def defaultStartingCharacter():
     return default_character
 
 def generalEasyEnemy():
-    return 0
+    easy_enemy = {
+        "vitality": 75,
+        "strength": 50,
+        "special": 50,
+    }
+    return easy_enemy
 
 def generalMediumEnemy():
-    return 0
+    medium_enemy = {
+        "vitality": 80,
+        "strength": 70,
+        "special": 65,
+    }
+    return medium_enemy
 
 def generalHardEnemy():
-    return 0
+    hard_enemy = {
+        "vitality": 90,
+        "strength": 80,
+        "special": 80,
+    }
+    return hard_enemy
 
 def bossEnemy():
-    return 0
+    boss_enemy = {
+        "vitality": 95,
+        "strength": 90,
+        "special": 90,
+    }
+    return boss_enemy
 
 def bossEndEnemy():
-    return 0
+    end_boss = {
+        "vitality": 100,
+        "strength": 100,
+        "special": 100,
+    }
+    return end_boss
 
 ######################################
 #
@@ -269,6 +390,7 @@ def move(curr_location):
 def play(character_name, character_stats, starting_location):
 
     starting_character = checkContinue(starting_location, character_stats)
+    direction = move(starting_location)
 
     isMove = canMove(direction, curr_location)
     if(isMove == True)
@@ -294,7 +416,11 @@ def getPlayerName():
 
 def getStartingLocation():
     starting_location = input("\nWhich dorm will you start at? Or would you like the default option?\n(example answers: ridgecrest, lakeside, riverside, presidential, default)\n")
-    return starting_location
+    starting_locations = ["lakeside", "ridgecrest", "riverside", "presidential"]
+    if(starting_location in starting_locations):
+        return starting_location
+    else:
+        getStartingLocation()
 
 def getStartingLocation():
     starting_location = getStartingLocation()
