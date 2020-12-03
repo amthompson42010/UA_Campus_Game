@@ -48,40 +48,40 @@ def presidentialLiving():
 
 # Intermediate Levels
 def gorgasLibrary():
-    enemy = getEnemyStats()
-    return enemy
+    enemy_char, boss_level_attrb = getEnemyStats()
+    return enemy, boss_level_attrb
 def quadLevel():
-    enemy = getEnemyStats()
-    return enemy
+    enemy_char, boss_level_attrb = getEnemyStats()
+    return enemy, boss_level_attrb
 def fergLevel():
-    enemy = getEnemyStats()
-    return enemy
+    enemy_char, boss_level_attrb = getEnemyStats()
+    return enemy,boss_level_attrb
 def engrLevel():
-    enemy = getEnemyStats()
-    return enemy
+    enemy_char, boss_level_attrb = getEnemyStats()
+    return enemy, boss_level_attrb
 def recLevel():
-    enemy = getEnemyStats()
-    return enemy
+    enemy_char, boss_level_attrb = getEnemyStats()
+    return enemy, boss_level_attrb
 def engrLibrary():
-    enemy = getEnemyStats()
-    return enemy
+    enemy_char, boss_level_attrb = getEnemyStats()
+    return enemy, boss_level_attrb
 def brunoLibrary():
-    enemy = getEnemyStats()
-    return enemy
+    enemy_char, boss_level_attrb = getEnemyStats()
+    return enemy_char, boss_level_attrb
 def adminLevel():
-    enemy = getEnemyStats()
-    return enemy
+    enemy_char, boss_level_attrb = getEnemyStats()
+    return enemy, boss_level_attrb
 def musicLevel():
-    enemy = getEnemyStats()
-    return enemy
+    enemy_char, boss_level_attrb = getEnemyStats()
+    return enemy, boss_level_attrb
 def baseballLevel():
-    enemy = getEnemyStats()
-    return enemy
+    enemy_char, boss_level_attrb = getEnemyStats()
+    return enemy, boss_level_attrb
 
 # End Level
 def stadiumLevel():
     boss = bossEndEnemy()
-    return boss
+    return boss, "end"
 
 ###########################
 #
@@ -89,6 +89,8 @@ def stadiumLevel():
 #
 ###########################
 
+# Function for attacking an enemy, and for enemies attacks
+# on the players
 def attack(current_character, enemy_character, attack_type, which_enemy, active_character):
     
     curr_character_health = current_character.get("vitality")
@@ -114,7 +116,6 @@ def attack(current_character, enemy_character, attack_type, which_enemy, active_
         else:
             curr_enemy_health = curr_enemy_health
             curr_character_strength = curr_character_strength
-
     elif(attack_type == 2 and which_enemy == "tutorial" and active_character == 0):
         special_attack = 0.25 * curr_character_strength
         if(curr_enemy_health != 0):
@@ -188,7 +189,7 @@ def attack(current_character, enemy_character, attack_type, which_enemy, active_
             curr_enemy_health = curr_enemy_health
             curr_character_strength = curr_character_strength
     elif(attack_type == 1 and which_enemy == "end" and active_character == 0):
-        base_attack = 0.50 * curr_character_strength
+        base_attack = 0.80 * curr_character_strength
         if(curr_enemy_health != 0):
             curr_enemy_health -= base_attack
             curr_character_strength += 15
@@ -196,7 +197,7 @@ def attack(current_character, enemy_character, attack_type, which_enemy, active_
             curr_enemy_health = curr_enemy_health
             curr_character_strength = curr_character_strength
     elif(attack_type == 2 and which_enemy == "end" and active_character == 0):
-        special_attack = 0.70 * curr_character_special
+        special_attack = 0.95 * curr_character_special
         if(curr_enemy_health != 0):
             curr_enemy_health -= special_attack
             curr_character_special -= 15
@@ -205,99 +206,99 @@ def attack(current_character, enemy_character, attack_type, which_enemy, active_
             curr_character_strength = curr_character_strength
     elif(attack_type == 1 and which_enemy == "tutorial" and active_character == 1):
         base_attack = 0.05 * curr_enemy_strength
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= base_attack
+        if(curr_character_health != 0):
+            curr_character_health -= base_attack
             curr_enemy_strength += 1
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 2 and which_enemy == "tutorial" and active_character == 1):
         special_attack = 0.05 * curr_enemy_special
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= special_attack
+        if(curr_character_health != 0):
+            curr_character_health -= special_attack
             curr_enemy_special -= 5
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 1 and which_enemy == "easy" and active_character == 1):
         base_attack = 0.1 * curr_enemy_strength
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= base_attack
+        if(curr_character_health != 0):
+            curr_character_health -= base_attack
             curr_enemy_strength += 1
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 2 and which_enemy == "easy" and active_character == 1):
         special_attack = 0.1 * curr_enemy_special
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= special_attack
+        if(curr_character_health != 0):
+            curr_character_health -= special_attack
             curr_enemy_special -= 5
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 1 and which_enemy == "medium" and active_character == 1):
         base_attack = 0.15 * curr_enemy_strength
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= base_attack
+        if(curr_character_health != 0):
+            curr_character_health -= base_attack
             curr_enemy_strength += 1
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 2 and which_enemy == "medium" and active_character == 1):
         special_attack = 0.15 * curr_enemy_special
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= special_attack
+        if(curr_character_health != 0):
+            curr_character_health -= special_attack
             curr_enemy_special -= 5
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 1 and which_enemy == "hard" and active_character == 1):
         base_attack = 0.25 * curr_enemy_strength
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= base_attack
+        if(curr_character_health != 0):
+            curr_character_health -= base_attack
             curr_enemy_strength += 1
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 2 and which_enemy == "hard" and active_character == 1):
         special_attack = 0.25 * curr_enemy_special
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= special_attack
+        if(curr_character_health != 0):
+            curr_character_health -= special_attack
             curr_enemy_special -= 5
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 1 and which_enemy == "boss" and active_character == 1):
         base_attack = 0.40 * curr_enemy_strength
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= base_attack
+        if(curr_character_health != 0):
+            curr_character_health -= base_attack
             curr_enemy_strength += 1
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 2 and which_enemy == "boss" and active_character == 1):
         special_attack = 0.40 * curr_enemy_special
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= special_attack
+        if(curr_character_health != 0):
+            curr_character_health -= special_attack
             curr_enemy_special -= 5
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 1 and which_enemy == "end" and active_character == 1):
-        base_attack = 0.50 * curr_enemy_strength
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= base_attack
+        base_attack = 0.15 * curr_enemy_strength
+        if(curr_character_health != 0):
+            curr_character_health -= base_attack
             curr_enemy_strength += 1
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
     elif(attack_type == 2 and which_enemy == "end" and active_character == 1):
-        special_attack = 0.50 * curr_enemy_special
-        if(curr_enemy_health != 0):
-            curr_enemy_health -= special_attack
+        special_attack = 0.25 * curr_enemy_special
+        if(curr_character_health != 0):
+            curr_character_health -= special_attack
             curr_enemy_special -= 5
         else:
-            curr_enemy_health = curr_enemy_health
+            curr_character_health = curr_character_health
             curr_enemy_strength = curr_enemy_strength
 
     updated_character = {
@@ -316,7 +317,9 @@ def attack(current_character, enemy_character, attack_type, which_enemy, active_
 
     return updated_character, updated_enemy
 
-def usePotion(potion_type, current_character):
+# Function to use a health or strength potion
+def usePotion(potion_type, current_character, enemy):
+    print(potion_type)
     
     curr_health = current_character.get("vitality")
     curr_strength = current_character.get("strength")
@@ -339,8 +342,9 @@ def usePotion(potion_type, current_character):
         "strength_potions": curr_strength_potions
     }
 
-    return updated_character
+    return updated_character, enemy
 
+# Function to update a character's characteristicsc
 def updateCharacterStats(current_character, health, strength, special, health_potions, strength_potions):
     
     # So this does not get messy
@@ -375,6 +379,7 @@ def updateCharacterStats(current_character, health, strength, special, health_po
 
     return updated_character
 
+# Function to handle health potions at the store
 def storeHealthPotions(character_stats, h_stock):
     h_potions_amt = int(input("How many health potions would you like?"))
     if(h_potions_amt > 0 and h_potions_amt <= h_stock):
@@ -385,6 +390,7 @@ def storeHealthPotions(character_stats, h_stock):
     
     return updated_character, h_potions_amt
 
+# Function to handle strength potions at the store
 def storeStrengthPotions(character_stats, s_stock):
     s_potions_amt = int(input("How many strength potions would you like?"))
     if(s_potions_amt > 0 and s_potions_amt <= s_stock):
@@ -395,6 +401,7 @@ def storeStrengthPotions(character_stats, s_stock):
     
     return updated_character, s_potions_amt
 
+# Function to handle the store in game
 def store(character_stats, h_stocks, potion_limits, s_stocks, s_timess, upgrade_limits, ss_timess):
     print("Welcome to the store!\n")
     h_stock = h_stocks
@@ -461,18 +468,26 @@ def store(character_stats, h_stocks, potion_limits, s_stocks, s_timess, upgrade_
 
     return updated_character
 
+# Function to get enemy characteristics
 def getEnemyStats():
-    boss_level = random.randInt(0, 10)
+    boss_level = random.randrange(10)
     if(boss_level >= 8):
+        boss_level_attrb = "boss"
         enemy = bossEnemy()
     elif(boss_level >= 6 and boss_level < 7):
+        boss_level_attrb = "hard"
         enemy = generalHardEnemy()
     elif(boss_level >= 4 and boss_level < 5):
+        boss_level_attrb = "medium"
         enemy = generalMediumEnemy()
     elif(boss_level < 4 and boss_level >= 0):
-        enemy = generalMediumEnemy()
+        boss_level_attrb = "easy"
+        enemy = generalEasyEnemy()
+    else:
+        boss_level_attrb = "easy"
+        enemy = generalEasyEnemy()
 
-    return enemy
+    return enemy, boss_level_attrb
 
 ######################################
 #
@@ -584,6 +599,7 @@ def bossEndEnemy():
 #
 ######################################
 
+# Function to set the starting character
 def startingCharacter(area):
     if(area == "lakeside"):
         return lakeSideStartingCharacter()
@@ -596,6 +612,7 @@ def startingCharacter(area):
     else:
         return defaultStartingCharacter()
 
+# Function to print a map of the game
 def printMap():
     print("|----------|    |--------------|    |------------|")
     print("|          |    |              |    |            |")
@@ -651,19 +668,20 @@ def printMap():
     print("                | Stadium      |    |  Stadium    |") 
     print("                |--------------|    |-------------|")
 
+# Function to handle pausing the game
 def pauseMenu():
     print("(1) Continue")
     print("(2) Map")
-    print("(3) Change Character")
-    print("(4) Quit")
+    print("(3) Quit")
     pause_option = int(input("\nPlease select an option from above...\n"))
     #print(type(pause_option))
-    if(pause_option in range(1, 5)):
+    if(pause_option in range(1, 4)):
         return pause_option
     else:
         print("Please enter a number 1-3 as your response.")
         pauseMenu()
 
+# Function to get the current level
 def getLevel(level, current_character):
     if(level == "riverside"):
         a = riverSideLiving()
@@ -682,52 +700,53 @@ def getLevel(level, current_character):
         enemy_level = "tutorial"
         return a, enemy_level
     elif(level == "gorgas"):
-        a = gorgasLibrary()
-        return a
+        a, enemy_level = gorgasLibrary()
+        return a, enemy_level
     elif(level == "quad"):
-        a = quadLevel()
-        return a
+        a, enemy_level = quadLevel()
+        return a, enemy_level
     elif(level == "ferg"):
-        a = fergLevel()
-        return a
+        a, enemy_level = fergLevel()
+        return a, enemy_level
     elif(level == "lakesideDining"):
         a = lakesideDining(current_character)
         return a
     elif(level == "engr"):
-        a = engrLevel()
-        return a
+        a, enemy_level = engrLevel()
+        return a, enemy_level
     elif(level == "rec"):
-        a = recLevel()
-        return a
+        a, enemy_level = recLevel()
+        return a, enemy_level
     elif(level == "presidential"):
         a = presidentialLiving()
         enemy_level = "tutorial"
         return a, enemy_level
     elif(level == "engrLib"):
-        a = engrLibrary()
-        return a
+        a, enemy_level = engrLibrary()
+        return a, enemy_level
     elif(level == "mcLureLib"):
         a = mcLureLibrary()
         return a
     elif(level == "brunoLib"):
-        a = brunoLibrary()
-        return a
+        a, enemy_level = brunoLibrary()
+        return a, enemy_level
     elif(level == "stadium"):
-        a = stadiumLevel()
-        return a
+        a, enemy_level = stadiumLevel()
+        return a, enemy_level
     elif(level == "admin"):
-        a = adminLevel()
-        return a
+        a, enemy_level = adminLevel()
+        return a, enemy_level
     elif(level == "music"):
-        a = musicLevel()
-        return a
+        a, enemy_level = musicLevel()
+        return a, enemy_level
     elif(level == "basketball"):
         a = basketballLevel()
         return a
     elif(level == "baseball"):
-        a = baseballLevel()
-        return a
+        a, enemy_level = baseballLevel()
+        return a, enemy_level
 
+# Function to handle if the game is paused or not
 def getPausedState():
     paused = input("\nWould you like to pause? (yes or no)\n")
     if(paused == "yes" or paused == "no"):
@@ -736,6 +755,7 @@ def getPausedState():
         print("Your input was not interpreted. Make sure to check your spelling and capitalization.")
         getPausedState()
 
+# Function to check for valid move in game
 def canMove(direction, curr_location):
     canMove = False
     if(curr_location == "lakeside"):
@@ -774,10 +794,137 @@ def canMove(direction, curr_location):
             canMove = True
         elif(direction == "east"):
             canMove = True
+    elif(curr_location == "stadium"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = False
+        elif(direction == "south"):
+            canMove = False
+        elif(direction == "east"):
+            canMove = True
+    elif(curr_location == "lakesideDining"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = True
+        elif(direction == "south"):
+            canMove = True
+        elif(direction == "east"):
+            canMove = True
+    elif(curr_location == "engr"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = True
+        elif(direction == "south"):
+            canMove = True
+        elif(direction == "east"):
+            canMove = True
+    elif(curr_location == "rec"):
+        if(direction == "north"):
+            canMove = False
+        elif(direction == "west"):
+            canMove = True
+        elif(direction == "south"):
+            canMove = False
+        elif(direction == "east"):
+            canMove = False
+    elif(curr_location == "ferg"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = False
+        elif(direction == "south"):
+            canMove = False
+        elif(direction == "east"):
+            canMove = False
+    elif(curr_location == "brunoLib"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = False
+        elif(direction == "south"):
+            canMove = True
+        elif(direction == "east"):
+            canMove = True
+    elif(curr_location == "gorgasLib"):
+        if(direction == "north"):
+            canMove = False
+        elif(direction == "west"):
+            canMove = True
+        elif(direction == "south"):
+            canMove = True
+        elif(direction == "east"):
+            canMove = True
+    elif(curr_location == "quad"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = True
+        elif(direction == "south"):
+            canMove = True
+        elif(direction == "east"):
+            canMove = True
+    elif(curr_location == "engrLib"):
+        if(direction == "north"):
+            canMove = False
+        elif(direction == "west"):
+            canMove = True
+        elif(direction == "south"):
+            canMove = False
+        elif(direction == "east"):
+            canMove = False
+    elif(curr_location == "mcLureLib"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = False
+        elif(direction == "south"):
+            canMove = True
+        elif(direction == "east"):
+            canMove = False
+    elif(curr_location == "admin"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = True
+        elif(direction == "south"):
+            canMove = True
+        elif(direction == "east"):
+            canMove = True
+    elif(curr_location == "music"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = True
+        elif(direction == "south"):
+            canMove = True
+        elif(direction == "east"):
+            canMove = False
+    elif(curr_location == "baseball"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = False
+        elif(direction == "south"):
+            canMove = False
+        elif(direction == "east"):
+            canMove = False
+    elif(curr_location == "basketball"):
+        if(direction == "north"):
+            canMove = True
+        elif(direction == "west"):
+            canMove = False
+        elif(direction == "south"):
+            canMove = False
+        elif(direction == "east"):
+            canMove = False
     return canMove
 
+# Function to move character
 def move():
-    direction = input("Which cardinal direction would you like to go? Options are north, south, east or west.")
+    direction = input("Which cardinal direction would you like to go? Options are north, south, east or west.\n")
     cordinal_direction = ["north", "south", "west", "east"]
     if(direction in cordinal_direction):
         return direction
@@ -785,6 +932,7 @@ def move():
         print('The answer you gave was not accepted. Please enter one of the choices as they show in the prompt.')
         move()
 
+# Function to actually move character and set new location
 def handleMove(direction, curr_location):
     if(curr_location == "lakeside"):
         if(direction == "south"):
@@ -833,7 +981,7 @@ def handleMove(direction, curr_location):
             location = "rec"
         elif(direction == "west"):
             location = "lakesideDining"
-    elif(curr_locaiton == "rec"):
+    elif(curr_location == "rec"):
         if(direction == "west"):
             location = "engr"
     elif(curr_location == "ferg"):
@@ -895,6 +1043,7 @@ def handleMove(direction, curr_location):
     
     return location
 
+# Function to return if the character can move, and the direction of movement
 def handleBoolMove(curr_location):
     move_direction = move()
     isMove = canMove(move_direction, curr_location)
@@ -902,8 +1051,9 @@ def handleBoolMove(curr_location):
         return True, move_direction
     else:
         print("You shall not pass!\n")
-        handleBoolMove()
+        handleBoolMove(curr_location)
 
+# Main function of playing the game
 def play(character_name, character_stats, starting_location):
 
     starting_character = checkContinue(starting_location, character_stats)
@@ -911,69 +1061,92 @@ def play(character_name, character_stats, starting_location):
     #level = getLevel(starting_location, character_stats)
     #level2 = getLevel("lakesideDining", character_stats)
     #direction = move(starting_location)
-    while(starting_character.get("vitality") > 0):
-        levelOneEnemy, enemy_level = getLevel(starting_location, character_stats)
-        
-        while(levelOneEnemy.get("vitality") > 0):
-            action = int(input("Would you like to do a \n(1) basic attack\n(2) a special attack\n(3) take a health potion\n(4) take a strength potion?\n"))
-            action_options = [1,2,3,4]
-            if(action in action_options):
-                if(action == 1 or action == 2):
-                    if(action == 1):
-                        starting_character, levelOneEnemy = attack(starting_character, levelOneEnemy, 1, enemy_level, 0)
-                        starting_character, levelOneEnemy = attack(starting_character, levelOneEnemy, 1, enemy_level, 1)
 
-            print("Your character:\nHealth: {}\nStrength: {}\nSpecial: {}\nHealth Potions: {}\nStrength Potions: {}\n".format(starting_character.get("vitality"), starting_character.get("strength"), starting_character.get("special"), starting_character.get("health_potions"), starting_character.get("strength_potions") ))
-            print("The Enemy:\nHealth: {}\nStrength: {}\nSpecial: {}\nHealth Potions: {}\nStrength Potions: {}\n".format(levelOneEnemy.get("vitality"), levelOneEnemy.get("strength"), levelOneEnemy.get("special"), levelOneEnemy.get("health_potions"), levelOneEnemy.get("strength_potions")))
-        print("Finished with that character.")
-        isMove, move_direction = handleBoolMove(starting_location)
-        if(isMove == True):
-            nextLevel = handleMove(move_direction, starting_location)
-            nextEnemy, enemy_level = getLevel(nextLevel, starting_character)
-            if(nextLevel != "stadium"):
-
-                while(nextEnemy.get("vitality") > 0):
-                    action = int(input("Would you like to do a \n(1) basic attack\n(2) a special attack\n(3) take a health potion\n(4) take a strength potion?\n"))
-                    action_options = [1,2,3,4]
-                    if(action in action_options):
-                        if(action == 1 or action == 2):
+    isMove, move_direction = handleBoolMove(starting_location)
+    if(isMove == True):
+        nextLevel = handleMove(move_direction, starting_location)
+        while(starting_character.get("vitality") > 0):
+            
+            if(isMove == True):
+                
+                if(nextLevel != "stadium" and nextLevel != "lakesideDining" and nextLevel != "mcLureLib" and nextLevel != "basketball"):
+                    nextEnemy, enemy_level = getLevel(nextLevel, starting_character)
+                    while(nextEnemy.get("vitality") > 0):
+                        print("\nHere is the enemy you are facing:\nHealth: {}\nStrength: {}\nSpecial: {}\nEnemies do not have health or strength potions.".format(nextEnemy.get("vitality"), nextEnemy.get("strength"), nextEnemy.get("special")))
+                        action = int(input("\nWould you like to do a \n(1) basic attack\n(2) a special attack\n(3) take a health potion\n(4) take a strength potion?\n"))
+                        action_options = [1,2,3,4]
+                        if(action in action_options):
+                            
                             if(action == 1):
                                 starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 0)
                                 starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 1)
-
-                    print("Your character:\nHealth: {}\nStrength: {}\nSpecial: {}\nHealth Potions: {}\nStrength Potions: {}\n".format(starting_character.get("vitality"), starting_character.get("strength"), starting_character.get("special"), starting_character.get("health_potions"), starting_character.get("strength_potions") ))
-                    print("The Enemy:\nHealth: {}\nStrength: {}\nSpecial: {}\nHealth Potions: {}\nStrength Potions: {}\n".format(nextEnemy.get("vitality"), nextEnemy.get("strength"), nextEnemy.get("special"), nextEnemy.get("health_potions"), nextEnemy.get("strength_potions")))
-                print("Finished level.")
-            else:
-                while(nextEnemy.get("vitality") > 0):
-                    action = int(input("Would you like to do a \n(1) basic attack\n(2) a special attack\n(3) take a health potion\n(4) take a strength potion?\n"))
-                    action_options = [1,2,3,4]
-                    if(action in action_options):
-                        if(action == 1 or action == 2):
-                            if(action == 1):
-                                starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 0)
+                            elif(action == 2):
+                                starting_character, nextEnemy = attack(starting_character, nextEnemy, 2, enemy_level, 0)
+                                starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 1)
+                            elif(action == 3):
+                                starting_character, nextEnemy = usePotion("health", starting_character, nextEnemy)
+                                starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 1)
+                            elif(action == 4):
+                                starting_character, nextEnemy = usePotion("strength", starting_character, nextEnemy)
                                 starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 1)
 
-                    print("Your character:\nHealth: {}\nStrength: {}\nSpecial: {}\nHealth Potions: {}\nStrength Potions: {}\n".format(starting_character.get("vitality"), starting_character.get("strength"), starting_character.get("special"), starting_character.get("health_potions"), starting_character.get("strength_potions") ))
-                    print("The Enemy:\nHealth: {}\nStrength: {}\nSpecial: {}\nHealth Potions: {}\nStrength Potions: {}\n".format(nextEnemy.get("vitality"), nextEnemy.get("strength"), nextEnemy.get("special"), nextEnemy.get("health_potions"), nextEnemy.get("strength_potions")))
-                print("Finished game.")
-    isPaused = getPausedState()
+                        print("Your character:\nHealth: {}\nStrength: {}\nSpecial: {}\nHealth Potions: {}\nStrength Potions: {}\n".format(starting_character.get("vitality"), starting_character.get("strength"), starting_character.get("special"), starting_character.get("health_potions"), starting_character.get("strength_potions") ))
+                        print("The Enemy:\nHealth: {}\nStrength: {}\nSpecial: {}\nHealth Potions: {}\nStrength Potions: {}\n".format(nextEnemy.get("vitality"), nextEnemy.get("strength"), nextEnemy.get("special"), nextEnemy.get("health_potions"), nextEnemy.get("strength_potions")))
+
+                        isPaused = getPausedState()
     
-    if(isPaused == "yes"):
-        pauseOption = pauseMenu()
-        if(pauseOption == 1):
-            isPaused = "no"
-        elif(pauseOption == 2):
-            printMap()
-        elif(pauseOption == 3):
-            exit()
+                        if(isPaused == "yes"):
+                            pauseOption = pauseMenu()
+                            if(pauseOption == 1):
+                                isPaused = "no"
+                            elif(pauseOption == 2):
+                                printMap()
+                            elif(pauseOption == 3):
+                                exit()
+                    
+                    print("Finished level.\n")
+                    isMove, move_direction = handleBoolMove(nextLevel)
+                    nextLevel = handleMove(move_direction, nextLevel)
+                    print("\nYou are here: {}".format(nextLevel))
+                elif(nextLevel == "stadium"):
+                    print("h3")
+                    nextEnemy, enemy_level = getLevel(nextLevel, starting_character)
+                    while(nextEnemy.get("vitality") > 0):
+                        action = int(input("\nWould you like to do a \n(1) basic attack\n(2) a special attack\n(3) take a health potion\n(4) take a strength potion?\n"))
+                        action_options = [1,2,3,4]
+                        if(action in action_options):
+                            if(action == 1):
+                                starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 0)
+                                starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 1)
+                            elif(action == 2):
+                                starting_character, nextEnemy = attack(starting_character, nextEnemy, 2, enemy_level, 0)
+                                starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 1)
+                            elif(action == 3):
+                                starting_character, nextEnemy = usePotion("health", starting_character, nextEnemy)
+                                print(starting_character)
+                                starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 1)
+                            elif(action == 4):
+                                starting_character, nextEnemy = usePotion("strength", starting_character, nextEnemy)
+                                starting_character, nextEnemy = attack(starting_character, nextEnemy, 1, enemy_level, 1)
 
-    print("testing after pause")
+                        print("\nYour character:\nHealth: {}\nStrength: {}\nSpecial: {}\nHealth Potions: {}\nStrength Potions: {}\n".format(starting_character.get("vitality"), starting_character.get("strength"), starting_character.get("special"), starting_character.get("health_potions"), starting_character.get("strength_potions") ))
+                        print("The Enemy:\nHealth: {}\nStrength: {}\nSpecial: {}\nHealth Potions: {}\nStrength Potions: {}\n".format(nextEnemy.get("vitality"), nextEnemy.get("strength"), nextEnemy.get("special"), nextEnemy.get("health_potions"), nextEnemy.get("strength_potions")))
+                    print("Finished game.")
+                    exit()
+                else:
+                    starting_character = getLevel(nextLevel, starting_character)
+                    print(nextLevel)
+                    isMove, move_direction = handleBoolMove(nextLevel)
+                    nextLevel = handleMove(move_direction, nextLevel)
+                    print("You are here: {}".format(nextLevel))
+        exit()
 
+# Function to get the player name
 def getPlayerName():
     player_name = input("\nWhat will your character's name be?\n")
     return player_name
 
+# Function to get the starting location
 def getStartingLocation():
     starting_location = input("\nWhich dorm will you start at? Or would you like the default option?\n(example answers: ridgecrest, lakeside, riverside, presidential, default)\n")
     starting_locations = ["lakeside", "ridgecrest", "riverside", "presidential", "default"]
@@ -983,10 +1156,7 @@ def getStartingLocation():
         print("should not go here")
         getStartingLocation()
 
-# def getStartingLocation():
-#     starting_location = getStartingLocation()
-#     return starting_location
-
+# Function to get the starting character
 def getStartingCharacter(starting_location):
     
     print("\nHere are the stats on your character: ")
@@ -999,6 +1169,7 @@ def getStartingCharacter(starting_location):
 
     return starting_character
 
+# Fucntion to print intro
 def intro():
     print('\n')
     print(' |      |      /\\           -------\\     /\\        /\\      /\\      |-------')
@@ -1009,11 +1180,13 @@ def intro():
     print('                       Created by: Alexander Mark Thompson                       ')
     info()
     
+# Funciton to print info of the game
 def info():
     print("\nWelcome to the adventure game through the campus of The University of Alabama!\n")
     print("This is a game that will take you through different locations at The University of Alabama.\n")
     print("The play style of this game is similar to that of the game known as Pokemon.\nYou will face different challenges with various levels of enemy battles.\nYou will create a character based off your starting location,and have stats based off of that.\nThe stats include health, strength, special ability level, and number of potions for health and strength.\nMake sure to use these values effectively or the game will be lost quickly.\n")
 
+# Function to check if it is okay to continue with the current character
 def checkContinue(starting_location, starting_character):
     continued = input("\nWould you like to swap this character? (yes or no)\nThis will swap your starting location as well\n")
     if(continued == "yes" or continued == "no"):
@@ -1028,6 +1201,7 @@ def checkContinue(starting_location, starting_character):
         print("Please enter a valid answer. (yes or no)")
         checkContinue(starting_location, starting_character)
 
+# Main Function
 def main():
     intro()
     player_name = getPlayerName()
